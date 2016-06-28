@@ -31,7 +31,7 @@ class ConnectToMySQL
 			$this->getTableFields = $this->RunTableFieldExec(new database\GetDatabaseFields());
 
 			// create CRUD classes.
-			$this->RunCreateClassExec(new class\CreateClass()) 
+			$this->RunCreateClassExec(new classes\CreateClass());
 		} catch (\PDOException $e) {
 			return $e->getMessage();
 		}
@@ -58,7 +58,7 @@ class ConnectToMySQL
 	**/
 	public function RunCreateClassExec(Callable $arg1) 
 	{
-		return $arg1($this->getTableFields());
+		return $arg1($this->getTableFields);
 	}
 }
 ?>
