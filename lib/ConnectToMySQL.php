@@ -18,10 +18,18 @@ class ConnectToMySQL
 	function __construct($config)
 	{
 		try {
+			// create mysql connection
 			$this->connection = new \PDO("mysql:host=".$config['host'].";dbname=".$config['db'],
 				$config['user'],$config['pass']);
+
+			// get list of database tables
 			 $this->getTables = $this->RunTablesExec(new database\GetDatabaseTables());
-			 $this->RunTableFieldExec(new database\GetDatabaseFields());
+
+			// get list of database fields
+			$result =  $this->RunTableFieldExec(new database\GetDatabaseFields());
+			echo '<pre>';
+			print_r($result);
+			echo '</pre>';
 		} catch (\PDOException $e) {
 			return $e->getMessage();
 		}
