@@ -7,16 +7,20 @@ class ConnectToMySQL
 {
 	/* string|null connection object */
 	private $connection;
+
+	private $getTables;
 	
 	/**
 	* construct to build the connection to 
 	* the mysql database.
 	**/
-	function __construct($host,$user,$pass,$db)
+	function __construct($config)
 	{
 		try {
-			$this->connection = new \PDO("mysql:host=".$host.";dbname=".$db,$user,$pass);
-			 $this->RunTables(new database\GetDatabaseTables());
+			$this->connection = new \PDO("mysql:host=".$config['host'].";dbname=".$config['db'],
+				$config['user'],$config['pass']);
+			 $this->getTables = $this->RunTables(new database\GetDatabaseTables());
+			 print_r($this->getTables);
 		} catch (\PDOException $e) {
 			return $e->getMessage();
 		}
