@@ -8,6 +8,7 @@ class ConnectToMySQL
 	/* string|null connection object */
 	private $connection;
 
+	/* array stores tables */
 	private $getTables;
 	
 	/**
@@ -19,15 +20,27 @@ class ConnectToMySQL
 		try {
 			$this->connection = new \PDO("mysql:host=".$config['host'].";dbname=".$config['db'],
 				$config['user'],$config['pass']);
-			 $this->getTables = $this->RunTables(new database\GetDatabaseTables());
-			 print_r($this->getTables);
+			 $this->getTables = $this->RunTablesExec(new database\GetDatabaseTables());
+			 $this->RunTableFieldExec(new database\GetDatabaseFields());
 		} catch (\PDOException $e) {
 			return $e->getMessage();
 		}
 	}
 
-	public function RunTables(Callable $arg1) {
+	/**
+	*
+	**/
+	public function RunTablesExec(Callable $arg1) 
+	{
 		return $arg1($this->connection);
+	}
+
+	/**
+	*
+	**/
+	public function RunTableFieldExec(Callable $arg1) 
+	{
+		return $arg1($this->connection,$this->getTables);
 	}
 }
 ?>
