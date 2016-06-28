@@ -57,7 +57,7 @@ class GetDatabaseFields
 			$q = $this->connection->prepare($array[$i]);
 			$q->execute();
 			$r = $q->fetchAll(\PDO::FETCH_ASSOC);
-			$this->sql_query_results[] = array($r);
+			$this->sql_query_results[] = $r;
 		}
 		return $this->sql_query_results;
 	}

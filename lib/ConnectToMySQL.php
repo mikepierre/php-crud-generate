@@ -11,6 +11,8 @@ class ConnectToMySQL
 	/* array stores tables */
 	private $getTables;
 	
+	/* array get table fields */
+	private $getTableFields;
 	/**
 	* construct to build the connection to 
 	* the mysql database.
@@ -26,10 +28,10 @@ class ConnectToMySQL
 			 $this->getTables = $this->RunTablesExec(new database\GetDatabaseTables());
 
 			// get list of database fields
-			$result =  $this->RunTableFieldExec(new database\GetDatabaseFields());
-			echo '<pre>';
-			print_r($result);
-			echo '</pre>';
+			$this->getTableFields = $this->RunTableFieldExec(new database\GetDatabaseFields());
+
+			// create CRUD classes.
+			$this->RunCreateClassExec(new class\CreateClass()) 
 		} catch (\PDOException $e) {
 			return $e->getMessage();
 		}
@@ -49,6 +51,14 @@ class ConnectToMySQL
 	public function RunTableFieldExec(Callable $arg1) 
 	{
 		return $arg1($this->connection,$this->getTables);
+	}
+
+	/**
+	*
+	**/
+	public function RunCreateClassExec(Callable $arg1) 
+	{
+		return $arg1($this->getTableFields());
 	}
 }
 ?>
