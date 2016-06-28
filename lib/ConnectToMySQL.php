@@ -58,7 +58,7 @@ class ConnectToMySQL
 	**/
 	public function RunCreateClassExec(Callable $arg1) 
 	{
-		return $arg1($this->getTableFields);
+		return $arg1($this->getTableFields,$this->getTables);
 	}
 }
 ?>
