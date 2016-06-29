@@ -16,7 +16,7 @@ $config = array(
 		'db'=>'medical'
 	),
 	'class_settings'=>array(
-		'namespace_name'=>'',
+		'namespace_name'=>'some/samespace',
 		'file_dir_location'=>'here'
 	));
 new lib\ConnectToMySQL($config);

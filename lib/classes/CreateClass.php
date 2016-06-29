@@ -9,9 +9,9 @@ class CreateClass
 	* creates the above class decleration
 	* @return string 
 	**/
-	public function createTopClassDeclaration($arg) 
+	public function createTopClassDeclaration($arg,$arg2) 
 	{
-		return "<?php\n class ".$arg." extends connection\n {\n";
+		return "<?php\n namespace ".$arg2.";\n class ".$arg." extends connection\n {\n";
 	}
 
 	/**
@@ -113,6 +113,26 @@ class CreateClass
 		$str .= "\$q->execute();\n";
 		$str .= "return \$r;";
 		$str .= "\n}\n\r";
+		return $str;
+	}
+
+	public function createMySqlFile($arg) 
+	{
+		$str = "";
+		$str .= "<?php\n namespace lib/database";\n class "Connection extends Clauses\n {\n";
+		$str .= "private \$conn = ''; \n";
+		$str .= "private \$hosts = ''; \n";
+		$str .= "private \$dbname = ''; \n";
+		$str .= "private \$user = ''; \n";
+		$str .= "private \$pass = ''; \n";
+		$str = "function __construct()\n{\n";
+		$str .="try {\n";
+		$str .="$this->conn = new \PDO('mysql:host='.$arg['database']['host'].';dbname='.$arg['database']['db'],
+				$arg['database']['user'],$arg['database']['pass']);\n";
+		$str .="} catch (\PDOException $e) {\n";
+		$str .="return $e->getMessage();\n";
+		$str .="}\n";
+		$str .="}\n";
 		return $str;
 	}
 }

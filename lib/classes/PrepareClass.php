@@ -24,7 +24,7 @@ class PrepareClass extends CreateClass
 	/* array results */
 	private $array_results = array();
 
-	private $config;
+	private $config = array();
 
 	/**
 	* invoke this class to be callable.
@@ -34,7 +34,7 @@ class PrepareClass extends CreateClass
 		$this->array_field_value = $arg;
 		$this->array_table_value = $arg2;
 		$this->config = $arg3;
-		
+
 		$this->getTableNameArray();
 		$this->getFieldsArray();
 		$this->array_results = $this->getFieldValueArray();
@@ -50,7 +50,7 @@ class PrepareClass extends CreateClass
 		foreach ($this->array_results as $key => $value) {
 			// write file 
 			//$file = fopen(__DIR__.'/../../dirname/'.$key.'.php', "w");
-			echo $this->createTopClassDeclaration($key);
+			echo $this->createTopClassDeclaration($key, $this->config['class_settings']['namespace_name']);
 			//fwrite($file, $this->createTopClassDeclaration($key));
 			for ($i=0; $i < count($value); $i++) { 
 				//fwrite($file, $this->createMemeberVariables($value[$i]));
