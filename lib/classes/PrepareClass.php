@@ -4,7 +4,7 @@ namespace lib\classes;
 * This class prepares the tables 
 * in order to create the classes. 
 */
-class PrepareClass
+class PrepareClass extends CreateClass
 {
 	/* array name of  table fields */
 	private $table_name_array = array();
@@ -32,24 +32,18 @@ class PrepareClass
 		$this->getTableNameArray();
 		$this->getFieldsArray();
 		$this->array_results = $this->getFieldValueArray();
-
-		//$array = array();
-		//$array_keys = array_keys($r);
-		//$str = "";
-		/*
-		$question_mark = "";
-		//echo __DIR__;
-		// insert 
-		*/
-		//$this->getInsertStatment();
-
-		// SELECT
 		//echo '<pre>';
+		//INSERT
+		//$this->getInsertStatment();
+		// SELECT
 		//$this->getSelectStatement();
-		//print_r($array);
 		// DELETE
-
+		//$this->getDeleteStament();
 		// UPDATE
+		$this->getUpdateStatement();
+
+		$this->createFile();
+
 	}
 	/**
 	* Add value from table name to table name array var.
@@ -151,20 +145,19 @@ class PrepareClass
 		$array = array();
 		$array_keys = array_keys($this->array_results);
 		$str = "";
-		$question_mark = "";
 		for ($i=0; $i <count($array_keys); $i++) { 
 			foreach ($this->array_results as $key => $value) {
 				if($key === $array_keys[$i]) {
 					for ($j=0; $j < count($value); $j++) { 
-						$str .= $value[$j].',';
-						$question_mark .= '?,';
-						$array[$key] = 'UPDATE  '.$key.' SET '.rtrim($str, ",").')';
+						$str .= $value[$j].'=?, ';
+						$array[$key] = 'UPDATE '.$key.' SET '.rtrim($str, ",").'WHERE';
 					}
 					$str ="";
 					$question_mark = "";
 				}
 			}
 		}
+		print_r($array);
 	}
 }
 ?>
