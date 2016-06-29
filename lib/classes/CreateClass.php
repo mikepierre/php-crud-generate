@@ -118,19 +118,20 @@ class CreateClass
 
 	public function createMySqlFile($arg) 
 	{
+		//print_r($arg);
 		$str = "";
-		$str .= "<?php\n namespace lib/database";\n class "Connection extends Clauses\n {\n";
-		$str .= "private \$conn = ''; \n";
-		$str .= "private \$hosts = ''; \n";
-		$str .= "private \$dbname = ''; \n";
-		$str .= "private \$user = ''; \n";
-		$str .= "private \$pass = ''; \n";
-		$str = "function __construct()\n{\n";
+		$str .= "<?php\n namespace lib/database;\n class Connection extends Clauses\n {\n";
+		$str .= "private \$conn; \n";
+		$str .= "private \$hosts = '".$arg['database']['host']."'; \n";
+		$str .= "private \$dbname = '".$arg['database']['db']."'; \n";
+		$str .= "private \$user = '".$arg['database']['user']."'; \n";
+		$str .= "private \$pass = '".$arg['database']['pass']."'; \n";
+		$str .= "function __construct()\n{\n";
 		$str .="try {\n";
-		$str .="$this->conn = new \PDO('mysql:host='.$arg['database']['host'].';dbname='.$arg['database']['db'],
-				$arg['database']['user'],$arg['database']['pass']);\n";
-		$str .="} catch (\PDOException $e) {\n";
-		$str .="return $e->getMessage();\n";
+		$str .="\$this->conn = new \PDO('mysql:host='.\$this->host.';dbname='.\$this->dbname,
+				\$this->user,\$this->pass);\n";
+		$str .="} catch (\PDOException \$e) {\n";
+		$str .="return \$e->getMessage();\n";
 		$str .="}\n";
 		$str .="}\n";
 		return $str;

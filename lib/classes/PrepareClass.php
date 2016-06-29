@@ -44,8 +44,13 @@ class PrepareClass extends CreateClass
 		$delete = $this->getDeleteStament();
 		$update = $this->getUpdateStatement();
 
-		//echo __DIR__.'/../../dirname';
-		//mkdir(__DIR__.'/../../dirname',0777);
+		//echo __DIR__.'/../database';
+
+		$create_db_file = fopen(__DIR__.'/../database/Connection.php', "w");
+		fwrite($create_db_file, $this->createMySqlFile($this->config));
+		fclose($create_db_file);
+
+		echo $this->createMySqlFile($this->config);
 
 		foreach ($this->array_results as $key => $value) {
 			// write file 
