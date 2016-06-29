@@ -4,7 +4,7 @@ namespace lib\classes;
 * This class prepares the tables 
 * in order to create the classes. 
 */
-class CreateClass
+class PrepareClass
 {
 	/* array name of  table fields */
 	private $table_name_array = array();
@@ -51,9 +51,7 @@ class CreateClass
 		echo '<pre>';
 		print_r($array);
 		// SELECT
-		for ($i=0; $i < ; $i++) { 
-			# code...
-		}
+
 		// DELETE
 
 		// UPDATE
@@ -92,5 +90,13 @@ class CreateClass
 		}
 		return $array;
 	}
+
+	public function getInsertStatment() {}
+
+	public function getSelectStatement() {}
+
+	public function getDeleteStament() {}
+
+	public function getUpdateStatement() {}
 }
 ?>
