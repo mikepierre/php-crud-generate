@@ -1,7 +1,8 @@
 <?php
 namespace lib\classes;
 /**
-* This class gets the database tables.
+* This class prepares the tables 
+* in order to create the classes. 
 */
 class CreateClass
 {
@@ -26,14 +27,17 @@ class CreateClass
 		$this->array_table_value = $arg2;
 		$this->getTableNameArray();
 		$this->getFieldsArray();
-		print_r($this->getFieldValueArray());
+		$r = $this->getFieldValueArray();
+		$array = array();
+		for ($i=0; $i < ; $i++) { 
+			# code...
+		}
 	}
 	/**
 	* Add value from table name to table name array var.
 	**/
 	public function getTableNameArray()
 	{
-		// add value from table name to table name array
 		foreach ($this->array_table_value as $key => $value) {
 			foreach ($value as $k => $v) {
 				$this->table_name_array[] =  $v;
