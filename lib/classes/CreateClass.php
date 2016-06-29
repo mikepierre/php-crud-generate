@@ -22,7 +22,7 @@ class CreateClass
 
 	public function createMemeberVariables($arg) 
 	{
-		return "\n".$arg."\n\r";
+		return "\n private \$".$arg.";\n\r";
 	}
 
 	public function createCreateMethodDeclaration($arg1) {
@@ -33,7 +33,7 @@ class CreateClass
 		return $str;
 	}
 
-	public function createReadMethodDeclaration() 
+	public function createReadMethodDeclaration($arg1) 
 	{
 		$str = "";
 		$str .= "public function read() \r {\r";
@@ -41,11 +41,24 @@ class CreateClass
 		$str .= "\n}\n\r";
 		return $str;
 	}
-	
-	public function createUpdateMethodDeclaration() {}
-	public function createDeleteMethodDeclaration() {}
 
-	public function createMethodDelarations() {}
+	public function createUpdateMethodDeclaration($arg1) 
+	{
+		$str = "";
+		$str .= "public function update(\$data) \r {\r";
+		$str .= "\$sql= \"".$arg1."\";";
+		$str .= "";
+		$str .= "\n}\n\r";
+		return $str;
+	}
 
+	public function createDeleteMethodDeclaration($arg1) 
+	{
+		$str = "";
+		$str .= "public function delete(\$data) \r {\r";
+		$str .= "\$sql= \"".$arg1."\";";
+		$str .= "\n}\n\r";
+		return $str;
+	}
 }
 ?>

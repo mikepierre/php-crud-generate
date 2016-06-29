@@ -33,17 +33,10 @@ class PrepareClass extends CreateClass
 		$this->getFieldsArray();
 		$this->array_results = $this->getFieldValueArray();
 
-		//echo '<pre>';
-		//print_r($this->array_results);
-		//INSERT
-		//$this->getInsertStatment();
-		// SELECT
-		//$this->getSelectStatement();
-		// DELETE
-		//$this->getDeleteStament();
-		// UPDATE
-		//$this->getUpdateStatement();
 		$insert = $this->getInsertStatment();
+		$read = $this->getSelectStatement();
+		$delete = $this->getDeleteStament();
+		$update = $this->getUpdateStatement();
 		foreach ($this->array_results as $key => $value) {
 			echo $this->createTopClassDeclaration($key);
 			for ($i=0; $i < count($value); $i++) { 
@@ -51,6 +44,9 @@ class PrepareClass extends CreateClass
 			}
 
 			echo $this->createCreateMethodDeclaration($insert[$key]);
+			echo $this->createReadMethodDeclaration($read[$key]);
+			echo $this->createUpdateMethodDeclaration($update[$key]);
+			echo $this->createDeleteMethodDeclaration($delete[$key]);
 
 			echo $this->createEndClassDeclaration();
 			//createMemeberVariables($arg)
@@ -133,7 +129,7 @@ class PrepareClass extends CreateClass
 				}
 			}
 		}
-		print_r($array);
+		return $array;
 	}
 
 	public function getDeleteStament() 
@@ -152,7 +148,7 @@ class PrepareClass extends CreateClass
 				}
 			}
 		}
-		print_r($array);
+		return $array;
 	}
 
 	public function getUpdateStatement() 
@@ -172,7 +168,7 @@ class PrepareClass extends CreateClass
 				}
 			}
 		}
-		print_r($array);
+		return $array;
 	}
 }
 ?>
