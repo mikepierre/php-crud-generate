@@ -32,7 +32,9 @@ class PrepareClass extends CreateClass
 		$this->getTableNameArray();
 		$this->getFieldsArray();
 		$this->array_results = $this->getFieldValueArray();
+
 		//echo '<pre>';
+		//print_r($this->array_results);
 		//INSERT
 		//$this->getInsertStatment();
 		// SELECT
@@ -40,9 +42,22 @@ class PrepareClass extends CreateClass
 		// DELETE
 		//$this->getDeleteStament();
 		// UPDATE
-		$this->getUpdateStatement();
+		//$this->getUpdateStatement();
+		$insert = $this->getInsertStatment();
+		foreach ($this->array_results as $key => $value) {
+			echo $this->createTopClassDeclaration($key);
+			for ($i=0; $i < count($value); $i++) { 
+				echo $this->createMemeberVariables($value[$i]); 
+			}
 
-		$this->createFile();
+			echo $this->createCreateMethodDeclaration($insert[$key]);
+
+			echo $this->createEndClassDeclaration();
+			//createMemeberVariables($arg)
+		}
+
+		//echo $this->createTopClassDeclaration();
+		//echo $this->createEndClassDeclaration();
 
 	}
 	/**
@@ -99,7 +114,7 @@ class PrepareClass extends CreateClass
 				}
 			}
 		}
-		print_r($array);
+		return $array;
 	}
 
 	public function getSelectStatement() 

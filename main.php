@@ -1,4 +1,6 @@
 <?php
+// changing the content type will display how class will look.
+header('Content-type: text/plain');
 // Report all errors
 error_reporting(E_ALL);
 

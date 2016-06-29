@@ -13,6 +13,7 @@ class ConnectToMySQL
 	
 	/* array get table fields */
 	private $getTableFields;
+	
 	/**
 	* construct to build the connection to 
 	* the mysql database.
