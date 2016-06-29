@@ -48,7 +48,7 @@ class CreateClass
 	}
 
 	/**
-	* creates the crete method declarations
+	* creates the CREATE method declarations
 	* @param $arg string
 	* @return string
 	**/
@@ -56,13 +56,16 @@ class CreateClass
 	{
 		$str = "";
 		$str .= "public function create(\$data) \r {\r";
-		$str .= "\$sql= \"".$arg1."\";";
+		$str .= "\$sql= \"".$arg1."\";\n";
+		$str .= "\$q = \$this->conn->prepare(\$sql);\n";
+		$str .= "\$q->execute();\n";
+		$str .= "return 1;";
 		$str .= "\n}\n\r";
 		return $str;
 	}
 
 	/**
-	* creates the read method declarations
+	* creates the READ method declarations
 	* @param $arg string
 	* @return string
 	*/
@@ -71,13 +74,16 @@ class CreateClass
 		$str = "";
 		$str .= "public function read() \r {\r";
 		$str .= "\$sql= \"".$arg1."\";\n";
-		$str .= "\$stmt = \$this->conn->prepare(\$sql)";
+		$str .= "\$q = \$this->conn->prepare(\$sql);\n";
+		$str .= "\$q->execute();\n";
+		$str .= "\$r = \$q->getechAll(\PDO::FETCH_ASSOC);\n";
+		$str .= "return \$r;";
 		$str .= "\n}\n\r";
 		return $str;
 	}
 
 	/**
-	* create the update metod declarations
+	* create the UPDATE metod declarations
 	* @param $arg string
 	* @return string
 	**/
@@ -85,14 +91,16 @@ class CreateClass
 	{
 		$str = "";
 		$str .= "public function update(\$data) \r {\r";
-		$str .= "\$sql= \"".$arg1."\";";
-		$str .= "";
+		$str .= "\$sql= \"".$arg1."\";\n";
+		$str .= "\$q = \$this->conn->prepare(\$sql);\n";
+		$str .= "\$q->execute();\n";
+		$str .= "return 1;";
 		$str .= "\n}\n\r";
 		return $str;
 	}
 
 	/**
-	* create the delete method declaration
+	* create the DELETE method declaration
 	* @param $arg string
 	* @return string
 	**/
@@ -100,7 +108,10 @@ class CreateClass
 	{
 		$str = "";
 		$str .= "public function delete(\$data) \r {\r";
-		$str .= "\$sql= \"".$arg1."\";";
+		$str .= "\$sql= \"".$arg1."\";\n";
+		$str .= "\$q = \$this->conn->prepare(\$sql);\n";
+		$str .= "\$q->execute();\n";
+		$str .= "return \$r;";
 		$str .= "\n}\n\r";
 		return $str;
 	}
