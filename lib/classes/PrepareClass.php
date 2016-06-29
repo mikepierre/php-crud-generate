@@ -18,12 +18,14 @@ class PrepareClass extends CreateClass
 	/* array fields of the array */
 	private $array_fields = array();
 
+	/* array array keys */
 	private $array_keys = array();
 
+	/* array results */
 	private $array_results = array();
 
 	/**
-	*
+	* invoke this class to be callable.
 	**/
 	public function __invoke($arg,$arg2) 
 	{
@@ -52,10 +54,6 @@ class PrepareClass extends CreateClass
 			echo $this->createEndClassDeclaration();
 			//createMemeberVariables($arg)
 		}
-
-		//echo $this->createTopClassDeclaration();
-		//echo $this->createEndClassDeclaration();
-
 	}
 	/**
 	* Add value from table name to table name array var.
@@ -92,6 +90,10 @@ class PrepareClass extends CreateClass
 		return $array;
 	}
 
+	/**
+	* Get the generated insert statments
+	* @return array
+	**/
 	public function getInsertStatment() 
 	{
 		$array = array();
@@ -114,6 +116,10 @@ class PrepareClass extends CreateClass
 		return $array;
 	}
 
+	/**
+	* get the generated select statements
+	* @return array
+	**/
 	public function getSelectStatement() 
 	{
 		$array = array();
@@ -133,6 +139,10 @@ class PrepareClass extends CreateClass
 		return $array;
 	}
 
+	/**
+	* get the generated delete statments
+	* @return array
+	**/
 	public function getDeleteStament() 
 	{
 		$array = array();
@@ -152,6 +162,10 @@ class PrepareClass extends CreateClass
 		return $array;
 	}
 
+	/**
+	* get generated update statement
+	* @return array
+	**/
 	public function getUpdateStatement() 
 	{
 		$array = array();

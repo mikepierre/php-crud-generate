@@ -5,26 +5,39 @@ namespace lib\classes;
 */
 class CreateClass
 {
-	public function createFile() 
-	{
-		echo 'Write File...';
-	}
-
+	/**
+	* creates the above class decleration
+	* @return string 
+	**/
 	public function createTopClassDeclaration($arg) 
 	{
 		return "<?php\n class ".$arg." extends connection\n {\n";
 	}
 
+	/**
+	* creates the below class declration
+	* @return string
+	**/
 	public function createEndClassDeclaration() 
 	{
 		return " }\n?>\n";
 	}
 
-	public function createMemeberVariables($arg) 
+	/**
+	* create member class variables
+	* @param $arg string
+	* @return string
+	**/
+	public function createMemeberVariables($arg1) 
 	{
-		return "\n private \$".$arg.";\n\r";
+		return "\n private \$".$arg1.";\n\r";
 	}
 
+	/**
+	* created the setter method method declarations
+	* @param $arg string
+	* @return string
+	**/
 	public function createSetterMethodDeclaration($arg1) 
 	{
 		$str = "";
@@ -34,6 +47,11 @@ class CreateClass
 		return $str;
 	}
 
+	/**
+	* creates the crete method declarations
+	* @param $arg string
+	* @return string
+	**/
 	public function createCreateMethodDeclaration($arg1) 
 	{
 		$str = "";
@@ -43,6 +61,11 @@ class CreateClass
 		return $str;
 	}
 
+	/**
+	* creates the read method declarations
+	* @param $arg string
+	* @return string
+	*/
 	public function createReadMethodDeclaration($arg1) 
 	{
 		$str = "";
@@ -53,6 +76,11 @@ class CreateClass
 		return $str;
 	}
 
+	/**
+	* create the update metod declarations
+	* @param $arg string
+	* @return string
+	**/
 	public function createUpdateMethodDeclaration($arg1) 
 	{
 		$str = "";
@@ -63,6 +91,11 @@ class CreateClass
 		return $str;
 	}
 
+	/**
+	* create the delete method declaration
+	* @param $arg string
+	* @return string
+	**/
 	public function createDeleteMethodDeclaration($arg1) 
 	{
 		$str = "";
