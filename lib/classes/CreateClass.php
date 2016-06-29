@@ -29,9 +29,34 @@ class CreateClass
 		$this->getFieldsArray();
 		$r = $this->getFieldValueArray();
 		$array = array();
+		$array_keys = array_keys($r);
+		//print_r($array_keys);
+		$str = "";
+		$question_mark = "";
+		//echo __DIR__;
+		// insert 
+		for ($i=0; $i <count($array_keys); $i++) { 
+			foreach ($r as $key => $value) {
+				if($key === $array_keys[$i]) {
+					for ($j=0; $j < count($value); $j++) { 
+						$str .= $value[$j].',';
+						$question_mark .= '?,';
+						$array[$key] = 'INSERT INTO '.$key.' '.rtrim($str, ","). ' VALUES ('.rtrim($question_mark,',').')';
+					}
+					$str ="";
+					$question_mark = "";
+				}
+			}
+		}
+		echo '<pre>';
+		print_r($array);
+		// SELECT
 		for ($i=0; $i < ; $i++) { 
 			# code...
 		}
+		// DELETE
+
+		// UPDATE
 	}
 	/**
 	* Add value from table name to table name array var.
