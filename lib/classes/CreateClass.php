@@ -5,33 +5,63 @@ namespace lib\classes;
 */
 class CreateClass
 {
-	/* array name of tall table fields */
+	/* array name of  table fields */
 	private $table_name_array = array();
+
+	/* array get all table fiel values */
+	private $array_field_value = array();
+
+	/* array get table values */
+	private $array_table_value = array();
+
+	/* array fields of the array */
+	private $array_fields = array();
 
 	/**
 	*
 	**/
 	public function __invoke($arg,$arg2) 
 	{
-		//echo '<pre>';
-		//print_r($arg2);
-		//echo '</pre>';
-
-		foreach ($arg2 as $key => $value) {
+		$this->array_field_value = $arg;
+		$this->array_table_value = $arg2;
+		$this->getTableNameArray();
+		$this->getFieldsArray();
+		print_r($this->getFieldValueArray());
+	}
+	/**
+	* Add value from table name to table name array var.
+	**/
+	public function getTableNameArray()
+	{
+		// add value from table name to table name array
+		foreach ($this->array_table_value as $key => $value) {
 			foreach ($value as $k => $v) {
-				$table_name_array[] =  $v;
+				$this->table_name_array[] =  $v;
 			}
 		}
-		$array= array();
-		//echo count($arg);
-		for ($i=0; $i < count($arg); $i++) { 
-			//echo $arg[$i];
-			//print_r($table_name_array);
-			foreach ($arg[$i] as $key => $value) {
-				echo $value['Field'].'<br />';
+	}
+	/**
+	* Add fields based on table name and field.
+	*/
+	public function getFieldsArray() 
+	{
+		for ($i=0; $i < count($this->array_field_value); $i++) { 
+			foreach ($this->array_field_value[$i] as $key => $value) {;
+				$this->array_fields[] = array($value['Field'],$this->table_name_array[$i]);
 			}
-			echo '<b>'.$table_name_array[$i].'</b><br />';
 		}
+	}
+	/**
+	* Create array of all values and create key based on the values from array.
+	* @return array
+	*/
+	public function getFieldValueArray() 
+	{
+		$array = array();
+		for ($i=0; $i <count($this->array_fields) ; $i++) { 
+			$array[$this->array_fields[$i][1]][] = $this->array_fields[$i][0];
+		}
+		return $array;
 	}
 }
 ?>
