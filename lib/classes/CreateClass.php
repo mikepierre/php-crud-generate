@@ -116,11 +116,13 @@ class CreateClass
 		return $str;
 	}
 
+	/**
+	*
+	**/
 	public function createMySqlFile($arg) 
 	{
-		//print_r($arg);
 		$str = "";
-		$str .= "<?php\n namespace lib/database;\n class Connection extends Clauses\n {\n";
+		$str .= "<?php\n namespace lib\database;\n class Connection extends Clauses\n {\n";
 		$str .= "private \$conn; \n";
 		$str .= "private \$hosts = '".$arg['database']['host']."'; \n";
 		$str .= "private \$dbname = '".$arg['database']['db']."'; \n";
@@ -135,6 +137,45 @@ class CreateClass
 		$str .="}\n";
 		$str .="}\n";
 		return $str;
+	}
+
+	/**
+	*
+	**/
+	public function execDatabaseConnectionClassCreation($config) 
+	{
+		$create_db_file = fopen(__DIR__.'/../database/Connection.php', "w");
+		fwrite($create_db_file, $this->createMySqlFile($config));
+		fclose($create_db_file);
+		return true;
+	}
+
+	/**
+	*
+	**/
+	public function executeDatabaseTableCreation($array_results,$config) 
+	{
+		
+		foreach ($array_results as $key => $value) {
+
+			mkdir(__DIR__.'/../../'.$config['class_settings']['namespace_name'].'.php', "w");
+
+			$file = fopen(__DIR__.'/../../'.$config['class_settings']['namespace_name'].'.php', "w");
+			fwrite($file, $this->createTopClassDeclaration($key, $config['class_settings']['namespace_name']));
+			for ($i=0; $i < count($value); $i++) { 
+				fwrite($file, $this->createMemeberVariables($value[$i]));
+				fwrite($file, $this->createSetterMethodDeclaration($value[$i]));
+				echo $this->createMemeberVariables($value[$i]); 
+				echo $this->createSetterMethodDeclaration($value[$i]);
+			}
+			fwrite($file,$this->createCreateMethodDeclaration($insert[$key]));
+			fwrite($file,$this->createReadMethodDeclaration($read[$key]));
+			fwrite($file,$this->createUpdateMethodDeclaration($update[$key]));
+			fwrite($file,$this->createDeleteMethodDeclaration($delete[$key]));
+			fwrite($file,$this->createEndClassDeclaration());
+			fclose($file);
+		}
+		return true;
 	}
 }
 ?>

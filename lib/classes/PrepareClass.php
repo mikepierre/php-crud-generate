@@ -44,14 +44,12 @@ class PrepareClass extends CreateClass
 		$delete = $this->getDeleteStament();
 		$update = $this->getUpdateStatement();
 
-		//echo __DIR__.'/../database';
+		// create connection config class
+		$this->execDatabaseConnectionClassCreation($this->config);
+		$this->executeDatabaseTableCreation($this->array_results,$this->config);
 
-		$create_db_file = fopen(__DIR__.'/../database/Connection.php', "w");
-		fwrite($create_db_file, $this->createMySqlFile($this->config));
-		fclose($create_db_file);
-
-		echo $this->createMySqlFile($this->config);
-
+		// create all classes
+		/*
 		foreach ($this->array_results as $key => $value) {
 			// write file 
 			//$file = fopen(__DIR__.'/../../dirname/'.$key.'.php', "w");
@@ -75,8 +73,9 @@ class PrepareClass extends CreateClass
 			echo $this->createDeleteMethodDeclaration($delete[$key]);
 			echo $this->createEndClassDeclaration();
 			//fclose($file);
-		}
+		}*/
 	}
+
 	/**
 	* Add value from table name to table name array var.
 	**/
@@ -88,6 +87,7 @@ class PrepareClass extends CreateClass
 			}
 		}
 	}
+
 	/**
 	* Add fields based on table name and field.
 	*/
