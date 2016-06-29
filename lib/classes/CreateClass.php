@@ -25,7 +25,17 @@ class CreateClass
 		return "\n private \$".$arg.";\n\r";
 	}
 
-	public function createCreateMethodDeclaration($arg1) {
+	public function createSetterMethodDeclaration($arg1) 
+	{
+		$str = "";
+		$str .= "public function ".$arg1."(\$".$arg1.") \r {\r";
+		$str .= "\$this->".$arg1." = \$".$arg1.";";
+		$str .= "\n}\n\r";
+		return $str;
+	}
+
+	public function createCreateMethodDeclaration($arg1) 
+	{
 		$str = "";
 		$str .= "public function create(\$data) \r {\r";
 		$str .= "\$sql= \"".$arg1."\";";
@@ -37,7 +47,8 @@ class CreateClass
 	{
 		$str = "";
 		$str .= "public function read() \r {\r";
-		$str .= "\$sql= \"".$arg1."\";";
+		$str .= "\$sql= \"".$arg1."\";\n";
+		$str .= "\$stmt = \$this->conn->prepare(\$sql)";
 		$str .= "\n}\n\r";
 		return $str;
 	}

@@ -41,6 +41,7 @@ class PrepareClass extends CreateClass
 			echo $this->createTopClassDeclaration($key);
 			for ($i=0; $i < count($value); $i++) { 
 				echo $this->createMemeberVariables($value[$i]); 
+				echo $this->createSetterMethodDeclaration($value[$i]);
 			}
 
 			echo $this->createCreateMethodDeclaration($insert[$key]);
