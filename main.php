@@ -9,10 +9,16 @@ require_once('autoload.php');
 
 //connect to database and generate all files in xml, and its classes.
 $config = array(
-	'host'=>'localhost',
-	'user'=>'root',
-	'pass'=>'',
-	'db'=>'medical');
+	'database'=>array(
+		'host'=>'localhost',
+		'user'=>'root',
+		'pass'=>'',
+		'db'=>'medical'
+	),
+	'class_settings'=>array(
+		'namespace_name'=>'',
+		'file_dir_location'=>'here'
+	));
 new lib\ConnectToMySQL($config);
 
 ?>

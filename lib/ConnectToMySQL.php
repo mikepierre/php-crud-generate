@@ -13,6 +13,9 @@ class ConnectToMySQL
 	
 	/* array get table fields */
 	private $getTableFields;
+
+	/* array config */
+	private $config;
 	
 	/**
 	* construct to build the connection to 
@@ -21,9 +24,10 @@ class ConnectToMySQL
 	function __construct($config)
 	{
 		try {
+			$this->config = $config;
 			// create mysql connection
-			$this->connection = new \PDO("mysql:host=".$config['host'].";dbname=".$config['db'],
-				$config['user'],$config['pass']);
+			$this->connection = new \PDO("mysql:host=".$config['database']['host'].";dbname=".$config['database']['db'],
+				$config['database']['user'],$config['database']['pass']);
 
 			// get list of database tables
 			 $this->getTables = $this->RunTablesExec(new database\GetDatabaseTables());
@@ -59,7 +63,7 @@ class ConnectToMySQL
 	**/
 	public function RunCreateClassExec(Callable $arg1) 
 	{
-		return $arg1($this->getTableFields,$this->getTables);
+		return $arg1($this->getTableFields,$this->getTables,$this->config);
 	}
 }
 ?>

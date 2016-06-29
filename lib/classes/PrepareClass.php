@@ -24,13 +24,17 @@ class PrepareClass extends CreateClass
 	/* array results */
 	private $array_results = array();
 
+	private $config;
+
 	/**
 	* invoke this class to be callable.
 	**/
-	public function __invoke($arg,$arg2) 
+	public function __invoke($arg,$arg2,$arg3) 
 	{
 		$this->array_field_value = $arg;
 		$this->array_table_value = $arg2;
+		$this->config = $arg3;
+		
 		$this->getTableNameArray();
 		$this->getFieldsArray();
 		$this->array_results = $this->getFieldValueArray();
@@ -39,20 +43,33 @@ class PrepareClass extends CreateClass
 		$read = $this->getSelectStatement();
 		$delete = $this->getDeleteStament();
 		$update = $this->getUpdateStatement();
+
+		//echo __DIR__.'/../../dirname';
+		//mkdir(__DIR__.'/../../dirname',0777);
+
 		foreach ($this->array_results as $key => $value) {
+			// write file 
+			//$file = fopen(__DIR__.'/../../dirname/'.$key.'.php', "w");
 			echo $this->createTopClassDeclaration($key);
+			//fwrite($file, $this->createTopClassDeclaration($key));
 			for ($i=0; $i < count($value); $i++) { 
+				//fwrite($file, $this->createMemeberVariables($value[$i]));
+				//fwrite($file, $this->createSetterMethodDeclaration($value[$i]));
 				echo $this->createMemeberVariables($value[$i]); 
 				echo $this->createSetterMethodDeclaration($value[$i]);
 			}
+			//fwrite($file,$this->createCreateMethodDeclaration($insert[$key]));
+			//fwrite($file,$this->createReadMethodDeclaration($read[$key]));
+			//fwrite($file,$this->createUpdateMethodDeclaration($update[$key]));
+			//fwrite($file,$this->createDeleteMethodDeclaration($delete[$key]));
+			//fwrite($file,$this->createEndClassDeclaration());
 
 			echo $this->createCreateMethodDeclaration($insert[$key]);
 			echo $this->createReadMethodDeclaration($read[$key]);
 			echo $this->createUpdateMethodDeclaration($update[$key]);
 			echo $this->createDeleteMethodDeclaration($delete[$key]);
-
 			echo $this->createEndClassDeclaration();
-			//createMemeberVariables($arg)
+			//fclose($file);
 		}
 	}
 	/**
