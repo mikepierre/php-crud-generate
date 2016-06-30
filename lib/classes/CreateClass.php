@@ -78,7 +78,7 @@ class CreateClass
 		$str .= "public function read()\n{\r";
 		$str .= "\t\$where = '';\n";
 		$str .= "\tif(isset(\$this->where)) {\n";
-		$str .= "\t\t\$where = 'WHERE '. \$this->where.''\n";
+		$str .= "\t\t\$where = 'WHERE '. \$this->where.'';\n";
 		$str .= "\t} else { \n";
 		$str .= "\t\t\$where = '';\n";
 		$str .="\t}\n";
@@ -103,7 +103,7 @@ class CreateClass
 		$str .= "\t\$sql= \"".$arg1." \" .\$this->where.\"\";\n";
 		$str .= "\t\$q = \$this->conn->prepare(\$sql);\n";
 		$str .= "\tfor (\$i=0; \$i <count(\$data); \$i++) { \n";
-		$str .= "\t\t\$this->conn-bindParam(\$i+1,\$data[\$i]);\n";
+		$str .= "\t\t\$this->conn->bindParam(\$i+1,\$data[\$i]);\n";
 		$str .= "\t}\n";
 		$str .= "\t\$q->execute();\n";
 		$str .= "\treturn 1;";
@@ -122,7 +122,7 @@ class CreateClass
 		$str .= "public function delete()\n{\r";
 		$str .= "\t\$where = '';\n";
 		$str .= "\tif(isset(\$this->where)) {\n";
-		$str .= "\t\t\$where = ''. \$this->where.''\n";
+		$str .= "\t\t\$where = ''. \$this->where.'';\n";
 		$str .= "\t} else { \n";
 		$str .= "\t\t\$where = '';\n";
 		$str .="\t}\n";
@@ -142,17 +142,18 @@ class CreateClass
 	{
 		$str = "";
 		$str .= "<?php\n namespace lib\database;\n class Connection extends Clauses\n {\n";
-		$str .= "private \$conn; \n";
+		$str .= "protected \$conn; \n";
 		$str .= "private \$hosts = '".$arg['database']['host']."'; \n";
 		$str .= "private \$dbname = '".$arg['database']['db']."'; \n";
 		$str .= "private \$user = '".$arg['database']['user']."'; \n";
 		$str .= "private \$pass = '".$arg['database']['pass']."'; \n";
 		$str .= "function __construct()\n{\n";
 		$str .="try {\n";
-		$str .="\t\$this->conn = new \PDO('mysql:host='.\$this->host.';dbname='.\$this->dbname,
+		$str .="\t\$this->conn = new \PDO('mysql:host='.\$this->hosts.';dbname='.\$this->dbname,
 				\t\$this->user,\$this->pass);\n";
 		$str .="} catch (\PDOException \$e) {\n";
 		$str .="\treturn \$e->getMessage();\n";
+		$str .="}\n";
 		$str .="}\n";
 		$str .="}\n";
 		return $str;
@@ -185,7 +186,6 @@ class CreateClass
 
 		for ($i=0; $i < count($namespace) ; $i++) { 
 			$str .= $namespace[$i]."/";
-			echo __DIR__.'/../../'.rtrim($str,"/");
 			if (!file_exists(__DIR__.'/../../'.rtrim($str,"/"))) {
 				mkdir(__DIR__.'/../../'.rtrim($str,"/"), 0777);
 			}

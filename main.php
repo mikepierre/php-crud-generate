@@ -16,8 +16,12 @@ $config = array(
 		'db'=>'medical'
 	),
 	'class_settings'=>array(
-		'namespace_name'=>'some\namespace' // also creates directory at root of project.
+		'namespace_name'=>'medical\model' // also creates directory at root of project.
 	));
 new lib\ConnectToMySQL($config);
 
+$appointment = new medical\model\appointment();
+
+$r = $appointment->read();
+print_r($r);
 ?>
