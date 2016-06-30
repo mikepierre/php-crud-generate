@@ -78,7 +78,7 @@ class CreateClass
 		$str .= "public function read()\n{\r";
 		$str .= "\t\$where = '';\n";
 		$str .= "\tif(isset(\$this->where)) {\n";
-		$str .= "\t\t\$where = 'WHERE '. \$this->where.'';\n";
+		$str .= "\t\t\$where = ' WHERE '. \$this->where.'';\n";
 		$str .= "\t} else { \n";
 		$str .= "\t\t\$where = '';\n";
 		$str .="\t}\n";
@@ -158,7 +158,6 @@ class CreateClass
 		$str .="}\n";
 		return $str;
 	}
-
 	/**
 	* Create database connection class
 	* @return bool

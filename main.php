@@ -18,10 +18,29 @@ $config = array(
 	'class_settings'=>array(
 		'namespace_name'=>'medical\model' // also creates directory at root of project.
 	));
+
 new lib\ConnectToMySQL($config);
 
 $appointment = new medical\model\appointment();
 
-$r = $appointment->read();
-print_r($r);
+// read all database fields
+$read = $appointment->read();
+//print_r($read);
+
+// read 1 id
+$appointment->where('id = 113');
+$read_where = $appointment->read();
+//print_r($read_where);
+
+// read several id's
+$appointment->where('id IN (92,93,94)');
+$read_in = $appointment->read();
+//print_r($read_in);
+
+// read between id's
+$appointment->where('id BETWEEN 92 AND 95');
+$read_between = $appointment->read();
+//print_r($read_between);
+
+
 ?>
