@@ -11,7 +11,7 @@ class CreateClass
 	**/
 	public function createTopClassDeclaration($arg,$arg2) 
 	{
-		return "<?php\n namespace ".$arg2.";\n class ".$arg." extends connection\n {\n";
+		return "<?php\n namespace ".$arg2.";\n class ".$arg." extends \database\connection\n {\n";
 	}
 
 	/**
@@ -30,7 +30,7 @@ class CreateClass
 	**/
 	public function createMemeberVariables($arg1) 
 	{
-		return "\n private \$".$arg1.";\n\r";
+		return "\n\n private \$".$arg1.";\n\r";
 	}
 
 	/**
@@ -55,11 +55,11 @@ class CreateClass
 	public function createCreateMethodDeclaration($arg1) 
 	{
 		$str = "";
-		$str .= "public function create(\$data) \r {\r";
-		$str .= "\$sql= \"".$arg1."\";\n";
-		$str .= "\$q = \$this->conn->prepare(\$sql);\n";
-		$str .= "\$q->execute();\n";
-		$str .= "return 1;";
+		$str .= "public function create(\$data) \n {\r";
+		$str .= "\t\$sql= \"".$arg1."\";\n";
+		$str .= "\t\$q = \$this->conn->prepare(\$sql);\n";
+		$str .= "\t\$q->execute();\n";
+		$str .= "\treturn 1;";
 		$str .= "\n}\n\r";
 		return $str;
 	}
@@ -73,11 +73,11 @@ class CreateClass
 	{
 		$str = "";
 		$str .= "public function read() \r {\r";
-		$str .= "\$sql= \"".$arg1."\";\n";
-		$str .= "\$q = \$this->conn->prepare(\$sql);\n";
-		$str .= "\$q->execute();\n";
-		$str .= "\$r = \$q->getechAll(\PDO::FETCH_ASSOC);\n";
-		$str .= "return \$r;";
+		$str .= "\t\$sql= \"".$arg1."\";\n";
+		$str .= "\t\$q = \$this->conn->prepare(\$sql);\n";
+		$str .= "\t\$q->execute();\n";
+		$str .= "\t\$r = \$q->getechAll(\PDO::FETCH_ASSOC);\n";
+		$str .= "\treturn \$r;";
 		$str .= "\n}\n\r";
 		return $str;
 	}
@@ -91,16 +91,16 @@ class CreateClass
 	{
 		$str = "";
 		$str .= "public function update(\$data) \r {\r";
-		$str .= "\$sql= \"".$arg1."\";\n";
-		$str .= "\$q = \$this->conn->prepare(\$sql);\n";
-		$str .= "\$q->execute();\n";
-		$str .= "return 1;";
+		$str .= "\t\$sql= \"".$arg1."\";\n";
+		$str .= "\t\$q = \$this->conn->prepare(\$sql);\n";
+		$str .= "\t\$q->execute();\n";
+		$str .= "\treturn 1;";
 		$str .= "\n}\n\r";
 		return $str;
 	}
 
 	/**
-	* create the DELETE method declaration
+	* Create the DELETE method declaration
 	* @param $arg string
 	* @return string
 	**/
@@ -108,16 +108,17 @@ class CreateClass
 	{
 		$str = "";
 		$str .= "public function delete(\$data) \r {\r";
-		$str .= "\$sql= \"".$arg1."\";\n";
-		$str .= "\$q = \$this->conn->prepare(\$sql);\n";
-		$str .= "\$q->execute();\n";
-		$str .= "return \$r;";
+		$str .= "\t\$sql= \"".$arg1."\";\n";
+		$str .= "\t\$q = \$this->conn->prepare(\$sql);\n";
+		$str .= "\t\$q->execute();\n";
+		$str .= "\treturn \$r;";
 		$str .= "\n}\n\r";
 		return $str;
 	}
 
 	/**
-	*
+	* Prepares the mysql file.
+	* @return string
 	**/
 	public function createMySqlFile($arg) 
 	{
@@ -130,28 +131,34 @@ class CreateClass
 		$str .= "private \$pass = '".$arg['database']['pass']."'; \n";
 		$str .= "function __construct()\n{\n";
 		$str .="try {\n";
-		$str .="\$this->conn = new \PDO('mysql:host='.\$this->host.';dbname='.\$this->dbname,
-				\$this->user,\$this->pass);\n";
+		$str .="\t\$this->conn = new \PDO('mysql:host='.\$this->host.';dbname='.\$this->dbname,
+				\t\$this->user,\$this->pass);\n";
 		$str .="} catch (\PDOException \$e) {\n";
-		$str .="return \$e->getMessage();\n";
+		$str .="\treturn \$e->getMessage();\n";
 		$str .="}\n";
 		$str .="}\n";
 		return $str;
 	}
 
 	/**
-	*
+	* Create database connection class
+	* @return bool
 	**/
 	public function execDatabaseConnectionClassCreation($config) 
 	{
 		$create_db_file = fopen(__DIR__.'/../database/Connection.php', "w");
-		fwrite($create_db_file, $this->createMySqlFile($config));
+		$fwrite = fwrite($create_db_file, $this->createMySqlFile($config));
 		fclose($create_db_file);
-		return true;
+		if ($fwrite === false) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 
 	/**
-	*
+	* Creates classes based on mysql tables.
+	* @return bool
 	**/
 	public function executeDatabaseTableCreation($array_results,$config,$crud) 
 	{
