@@ -7,10 +7,10 @@ namespace lib\database;
 class Clauses 
 {
 	/* string where */
-	private $where;
+	protected $where;
 
 	/* string limit */
-	private $limit;
+	protected $limit;
 
 	/**
 	* this method appends where clause to sql statment.
@@ -33,7 +33,6 @@ class Clauses
 		$this->limit = $limit;
 		$this;
 	}
-
 
 }
 ?>

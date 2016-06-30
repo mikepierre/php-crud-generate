@@ -103,7 +103,7 @@ class PrepareClass extends CreateClass
 					for ($j=1; $j < count($value); $j++) { 
 						$str .= $value[$j].',';
 						$question_mark .= '?,';
-						$array[$key] = 'INSERT INTO '.$key.' '.rtrim($str, ","). ' VALUES ('.rtrim($question_mark,',').')';
+						$array[$key] = 'INSERT INTO '.$key.' ('.rtrim($str, ","). ') VALUES ('.rtrim($question_mark,',').')';
 					}
 					$str ="";
 					$question_mark = "";

@@ -11,7 +11,7 @@ class CreateClass
 	**/
 	public function createTopClassDeclaration($arg,$arg2) 
 	{
-		return "<?php\n namespace ".$arg2.";\n class ".$arg." extends \lib\database\Connection\n {\n";
+		return "<?php\nnamespace ".$arg2.";\nclass ".$arg." extends \lib\database\Connection\n{\n";
 	}
 
 	/**
@@ -42,7 +42,7 @@ class CreateClass
 	{
 		$str = "";
 		$str .= "public function ".$arg1."(\$".$arg1.")\n{\r";
-		$str .= "\$this->".$arg1." = \$".$arg1.";";
+		$str .= "\t\$this->".$arg1." = \$".$arg1.";";
 		$str .= "\n}\n\r";
 		return $str;
 	}
@@ -59,10 +59,10 @@ class CreateClass
 		$str .= "\t\$sql= \"".$arg1."\";\n";
 		$str .= "\t\$q = \$this->conn->prepare(\$sql);\n";
 		$str .= "\tfor (\$i=0; \$i <count(\$data); \$i++) { \n";
-		$str .= "\t\t\$this->conn-bindParam(\$i+1,\$data[\$i]);\n";
+		$str .= "\t\t\$q->bindParam(\$i+1,\$data[\$i]);\n";
 		$str .= "\t}\n";
 		$str .= "\t\$q->execute();\n";
-		$str .= "\treturn 1;";
+		$str .= "\treturn true;";
 		$str .= "\n}\n\n\r";
 		return $str;
 	}
@@ -77,12 +77,18 @@ class CreateClass
 		$str = "";
 		$str .= "public function read()\n{\r";
 		$str .= "\t\$where = '';\n";
+		$str .= "\t\$limit = '';\n";
 		$str .= "\tif(isset(\$this->where)) {\n";
 		$str .= "\t\t\$where = ' WHERE '. \$this->where.'';\n";
 		$str .= "\t} else { \n";
 		$str .= "\t\t\$where = '';\n";
-		$str .="\t}\n";
-		$str .= "\t\$sql= \"".$arg1."\" .\$where.\"\";\n";
+		$str .= "\t}\n";
+		$str .= "\tif(isset(\$this->limit)) {\n";
+		$str .= "\t\t\$limit = ' LIMIT '. \$this->limit.'';\n";
+		$str .= "\t} else { \n";
+		$str .= "\t\t\$limit = '';\n";
+		$str .= "\t}\n";
+		$str .= "\t\$sql= \"".$arg1."\" .\$where.\" \" .\$limit.\"\";\n";
 		$str .= "\t\$q = \$this->conn->prepare(\$sql);\n";
 		$str .= "\t\$q->execute();\n";
 		$str .= "\t\$r = \$q->fetchAll(\PDO::FETCH_ASSOC);\n";
@@ -103,10 +109,10 @@ class CreateClass
 		$str .= "\t\$sql= \"".$arg1." \" .\$this->where.\"\";\n";
 		$str .= "\t\$q = \$this->conn->prepare(\$sql);\n";
 		$str .= "\tfor (\$i=0; \$i <count(\$data); \$i++) { \n";
-		$str .= "\t\t\$this->conn->bindParam(\$i+1,\$data[\$i]);\n";
+		$str .= "\t\t\$q->bindParam(\$i+1,\$data[\$i]);\n";
 		$str .= "\t}\n";
 		$str .= "\t\$q->execute();\n";
-		$str .= "\treturn 1;";
+		$str .= "\treturn true;";
 		$str .= "\n}\n\n\r";
 		return $str;
 	}
@@ -129,7 +135,7 @@ class CreateClass
 		$str .= "\t\$sql= \"".$arg1."\" .\$where.\"\";\n";
 		$str .= "\t\$q = \$this->conn->prepare(\$sql);\n";
 		$str .= "\t\$q->execute();\n";
-		$str .= "\treturn \$r;";
+		$str .= "\treturn true;";
 		$str .= "\n}\n\n\r";
 		return $str;
 	}
