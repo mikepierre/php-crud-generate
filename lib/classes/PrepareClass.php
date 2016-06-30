@@ -100,7 +100,7 @@ class PrepareClass extends CreateClass
 		for ($i=0; $i <count($array_keys); $i++) { 
 			foreach ($this->array_results as $key => $value) {
 				if($key === $array_keys[$i]) {
-					for ($j=0; $j < count($value); $j++) { 
+					for ($j=1; $j < count($value); $j++) { 
 						$str .= $value[$j].',';
 						$question_mark .= '?,';
 						$array[$key] = 'INSERT INTO '.$key.' '.rtrim($str, ","). ' VALUES ('.rtrim($question_mark,',').')';
@@ -171,9 +171,9 @@ class PrepareClass extends CreateClass
 		for ($i=0; $i <count($array_keys); $i++) { 
 			foreach ($this->array_results as $key => $value) {
 				if($key === $array_keys[$i]) {
-					for ($j=0; $j < count($value); $j++) { 
+					for ($j=1; $j < count($value); $j++) { 
 						$str .= $value[$j].'=?, ';
-						$array[$key] = 'UPDATE '.$key.' SET '.rtrim($str, ", ").' WHERE';
+						$array[$key] = 'UPDATE '.$key.' SET '.rtrim($str, ", ").' WHERE ';
 					}
 					$str ="";
 					$question_mark = "";

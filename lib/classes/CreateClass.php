@@ -30,7 +30,7 @@ class CreateClass
 	**/
 	public function createMemeberVariables($arg1) 
 	{
-		return "\n\nprivate \$".$arg1.";\n\n";
+		return "\nprivate \$".$arg1.";\n\n";
 	}
 
 	/**
@@ -58,6 +58,9 @@ class CreateClass
 		$str .= "public function create(\$data)\n{\r";
 		$str .= "\t\$sql= \"".$arg1."\";\n";
 		$str .= "\t\$q = \$this->conn->prepare(\$sql);\n";
+		$str .= "\tfor (\$i=0; \$i <count(\$data); \$i++) { \n";
+		$str .= "\t\t\$this->conn-bindParam(\$i+1,\$data[\$i]);\n";
+		$str .= "\t}\n";
 		$str .= "\t\$q->execute();\n";
 		$str .= "\treturn 1;";
 		$str .= "\n}\n\n\r";
@@ -73,7 +76,13 @@ class CreateClass
 	{
 		$str = "";
 		$str .= "public function read()\n{\r";
-		$str .= "\t\$sql= \"".$arg1."\";\n";
+		$str .= "\t\$where = '';\n";
+		$str .= "\tif(isset(\$this->where)) {\n";
+		$str .= "\t\t\$where = 'WHERE '. \$this->where.''\n";
+		$str .= "\t} else { \n";
+		$str .= "\t\t\$where = '';\n";
+		$str .="\t}\n";
+		$str .= "\t\$sql= \"".$arg1."\" .\$where.\"\";\n";
 		$str .= "\t\$q = \$this->conn->prepare(\$sql);\n";
 		$str .= "\t\$q->execute();\n";
 		$str .= "\t\$r = \$q->fetchAll(\PDO::FETCH_ASSOC);\n";
@@ -93,11 +102,15 @@ class CreateClass
 		$str .= "public function update(\$data)\n{\r";
 		$str .= "\t\$sql= \"".$arg1." \" .\$this->where.\"\";\n";
 		$str .= "\t\$q = \$this->conn->prepare(\$sql);\n";
+		$str .= "\tfor (\$i=0; \$i <count(\$data); \$i++) { \n";
+		$str .= "\t\t\$this->conn-bindParam(\$i+1,\$data[\$i]);\n";
+		$str .= "\t}\n";
 		$str .= "\t\$q->execute();\n";
 		$str .= "\treturn 1;";
 		$str .= "\n}\n\n\r";
 		return $str;
 	}
+
 	/**
 	* Create the DELETE method declaration
 	* @param $arg string
@@ -106,8 +119,14 @@ class CreateClass
 	public function createDeleteMethodDeclaration($arg1) 
 	{
 		$str = "";
-		$str .= "public function delete(\$data)\n{\r";
-		$str .= "\t\$sql= \"".$arg1."\";\n";
+		$str .= "public function delete()\n{\r";
+		$str .= "\t\$where = '';\n";
+		$str .= "\tif(isset(\$this->where)) {\n";
+		$str .= "\t\t\$where = ''. \$this->where.''\n";
+		$str .= "\t} else { \n";
+		$str .= "\t\t\$where = '';\n";
+		$str .="\t}\n";
+		$str .= "\t\$sql= \"".$arg1."\" .\$where.\"\";\n";
 		$str .= "\t\$q = \$this->conn->prepare(\$sql);\n";
 		$str .= "\t\$q->execute();\n";
 		$str .= "\treturn \$r;";
