@@ -153,25 +153,29 @@ class CreateClass
 	/**
 	*
 	**/
-	public function executeDatabaseTableCreation($array_results,$config) 
+	public function executeDatabaseTableCreation($array_results,$config,$crud) 
 	{
-		
+		$namespace = explode("\\",$config['class_settings']['namespace_name']);
+		$str = "";
+
+		for ($i=0; $i < count($namespace) ; $i++) { 
+			$str .= $namespace[$i]."/";
+			echo __DIR__.'/../../'.rtrim($str,"/");
+			if (!file_exists(__DIR__.'/../../'.rtrim($str,"/"))) {
+				mkdir(__DIR__.'/../../'.rtrim($str,"/"), 0777);
+			}
+		}
 		foreach ($array_results as $key => $value) {
-
-			mkdir(__DIR__.'/../../'.$config['class_settings']['namespace_name'].'.php', "w");
-
-			$file = fopen(__DIR__.'/../../'.$config['class_settings']['namespace_name'].'.php', "w");
+			$file = fopen(__DIR__.'/../../'.str_replace("\\", "/",$config['class_settings']['namespace_name']).'/'.$key.'.php', "w");
 			fwrite($file, $this->createTopClassDeclaration($key, $config['class_settings']['namespace_name']));
 			for ($i=0; $i < count($value); $i++) { 
 				fwrite($file, $this->createMemeberVariables($value[$i]));
 				fwrite($file, $this->createSetterMethodDeclaration($value[$i]));
-				echo $this->createMemeberVariables($value[$i]); 
-				echo $this->createSetterMethodDeclaration($value[$i]);
 			}
-			fwrite($file,$this->createCreateMethodDeclaration($insert[$key]));
-			fwrite($file,$this->createReadMethodDeclaration($read[$key]));
-			fwrite($file,$this->createUpdateMethodDeclaration($update[$key]));
-			fwrite($file,$this->createDeleteMethodDeclaration($delete[$key]));
+			fwrite($file,$this->createCreateMethodDeclaration($crud['insert'][$key]));
+			fwrite($file,$this->createReadMethodDeclaration($crud['read'][$key]));
+			fwrite($file,$this->createUpdateMethodDeclaration($crud['update'][$key]));
+			fwrite($file,$this->createDeleteMethodDeclaration($crud['delete'][$key]));
 			fwrite($file,$this->createEndClassDeclaration());
 			fclose($file);
 		}

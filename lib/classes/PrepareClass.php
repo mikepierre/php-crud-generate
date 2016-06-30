@@ -41,39 +41,14 @@ class PrepareClass extends CreateClass
 
 		$insert = $this->getInsertStatment();
 		$read = $this->getSelectStatement();
-		$delete = $this->getDeleteStament();
 		$update = $this->getUpdateStatement();
+		$delete = $this->getDeleteStament();
 
+		$crud = array('insert'=>$insert, 'read'=>$read, 'update'=>$update, 'delete'=>$delete);
 		// create connection config class
 		$this->execDatabaseConnectionClassCreation($this->config);
-		$this->executeDatabaseTableCreation($this->array_results,$this->config);
-
 		// create all classes
-		/*
-		foreach ($this->array_results as $key => $value) {
-			// write file 
-			//$file = fopen(__DIR__.'/../../dirname/'.$key.'.php', "w");
-			echo $this->createTopClassDeclaration($key, $this->config['class_settings']['namespace_name']);
-			//fwrite($file, $this->createTopClassDeclaration($key));
-			for ($i=0; $i < count($value); $i++) { 
-				//fwrite($file, $this->createMemeberVariables($value[$i]));
-				//fwrite($file, $this->createSetterMethodDeclaration($value[$i]));
-				echo $this->createMemeberVariables($value[$i]); 
-				echo $this->createSetterMethodDeclaration($value[$i]);
-			}
-			//fwrite($file,$this->createCreateMethodDeclaration($insert[$key]));
-			//fwrite($file,$this->createReadMethodDeclaration($read[$key]));
-			//fwrite($file,$this->createUpdateMethodDeclaration($update[$key]));
-			//fwrite($file,$this->createDeleteMethodDeclaration($delete[$key]));
-			//fwrite($file,$this->createEndClassDeclaration());
-
-			echo $this->createCreateMethodDeclaration($insert[$key]);
-			echo $this->createReadMethodDeclaration($read[$key]);
-			echo $this->createUpdateMethodDeclaration($update[$key]);
-			echo $this->createDeleteMethodDeclaration($delete[$key]);
-			echo $this->createEndClassDeclaration();
-			//fclose($file);
-		}*/
+		$this->executeDatabaseTableCreation($this->array_results,$this->config,$crud);
 	}
 
 	/**
