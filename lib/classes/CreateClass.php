@@ -167,19 +167,23 @@ class CreateClass
 		}
 		foreach ($array_results as $key => $value) {
 			$file = fopen(__DIR__.'/../../'.str_replace("\\", "/",$config['class_settings']['namespace_name']).'/'.$key.'.php', "w");
-			fwrite($file, $this->createTopClassDeclaration($key, $config['class_settings']['namespace_name']));
+			$fwrite = fwrite($file, $this->createTopClassDeclaration($key, $config['class_settings']['namespace_name']));
 			for ($i=0; $i < count($value); $i++) { 
-				fwrite($file, $this->createMemeberVariables($value[$i]));
-				fwrite($file, $this->createSetterMethodDeclaration($value[$i]));
+				$fwrite .= fwrite($file, $this->createMemeberVariables($value[$i]));
+				$fwrite .= fwrite($file, $this->createSetterMethodDeclaration($value[$i]));
 			}
-			fwrite($file,$this->createCreateMethodDeclaration($crud['insert'][$key]));
-			fwrite($file,$this->createReadMethodDeclaration($crud['read'][$key]));
-			fwrite($file,$this->createUpdateMethodDeclaration($crud['update'][$key]));
-			fwrite($file,$this->createDeleteMethodDeclaration($crud['delete'][$key]));
-			fwrite($file,$this->createEndClassDeclaration());
+			$fwrite .= fwrite($file,$this->createCreateMethodDeclaration($crud['insert'][$key]));
+			$fwrite .= fwrite($file,$this->createReadMethodDeclaration($crud['read'][$key]));
+			$fwrite .= fwrite($file,$this->createUpdateMethodDeclaration($crud['update'][$key]));
+			$fwrite .= fwrite($file,$this->createDeleteMethodDeclaration($crud['delete'][$key]));
+			$fwrite .= fwrite($file,$this->createEndClassDeclaration());
 			fclose($file);
 		}
-		return true;
+			if ($fwrite === false) {
+				return false;
+			} else {
+				return true;
+			}
 	}
 }
 ?>
