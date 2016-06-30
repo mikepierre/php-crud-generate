@@ -19,10 +19,13 @@ $config = array(
 		'namespace_name'=>'medical\model' // also creates directory at root of project.
 	));
 
-new lib\ConnectToMySQL($config);
+//generate models with cruds
+new lib\PhpCrudGenerate($config);
 
+// init one of the generate classes
 $appointment = new medical\model\appointment();
 
+//how to use.
 // read all database fields
 $read = $appointment->read();
 print_r($read);

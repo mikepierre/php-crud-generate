@@ -3,7 +3,7 @@ namespace lib;
 /**
 * This class connects to MySQL PDO
 */
-class ConnectToMySQL
+class PhpCrudGenerate
 {
 	/* string|null connection object */
 	private $connection;
