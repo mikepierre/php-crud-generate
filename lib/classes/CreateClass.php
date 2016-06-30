@@ -11,7 +11,7 @@ class CreateClass
 	**/
 	public function createTopClassDeclaration($arg,$arg2) 
 	{
-		return "<?php\n namespace ".$arg2.";\n class ".$arg." extends \database\connection\n {\n";
+		return "<?php\n namespace ".$arg2.";\n class ".$arg." extends \lib\database\Connection\n {\n";
 	}
 
 	/**
@@ -30,7 +30,7 @@ class CreateClass
 	**/
 	public function createMemeberVariables($arg1) 
 	{
-		return "\n\n private \$".$arg1.";\n\r";
+		return "\n\nprivate \$".$arg1.";\n\n";
 	}
 
 	/**
@@ -41,7 +41,7 @@ class CreateClass
 	public function createSetterMethodDeclaration($arg1) 
 	{
 		$str = "";
-		$str .= "public function ".$arg1."(\$".$arg1.") \r {\r";
+		$str .= "public function ".$arg1."(\$".$arg1.")\n{\r";
 		$str .= "\$this->".$arg1." = \$".$arg1.";";
 		$str .= "\n}\n\r";
 		return $str;
@@ -55,12 +55,12 @@ class CreateClass
 	public function createCreateMethodDeclaration($arg1) 
 	{
 		$str = "";
-		$str .= "public function create(\$data) \n {\r";
+		$str .= "public function create(\$data)\n{\r";
 		$str .= "\t\$sql= \"".$arg1."\";\n";
 		$str .= "\t\$q = \$this->conn->prepare(\$sql);\n";
 		$str .= "\t\$q->execute();\n";
 		$str .= "\treturn 1;";
-		$str .= "\n}\n\r";
+		$str .= "\n}\n\n\r";
 		return $str;
 	}
 
@@ -72,13 +72,13 @@ class CreateClass
 	public function createReadMethodDeclaration($arg1) 
 	{
 		$str = "";
-		$str .= "public function read() \r {\r";
+		$str .= "public function read()\n{\r";
 		$str .= "\t\$sql= \"".$arg1."\";\n";
 		$str .= "\t\$q = \$this->conn->prepare(\$sql);\n";
 		$str .= "\t\$q->execute();\n";
-		$str .= "\t\$r = \$q->getechAll(\PDO::FETCH_ASSOC);\n";
+		$str .= "\t\$r = \$q->fetchAll(\PDO::FETCH_ASSOC);\n";
 		$str .= "\treturn \$r;";
-		$str .= "\n}\n\r";
+		$str .= "\n}\n\n\r";
 		return $str;
 	}
 
@@ -90,15 +90,14 @@ class CreateClass
 	public function createUpdateMethodDeclaration($arg1) 
 	{
 		$str = "";
-		$str .= "public function update(\$data) \r {\r";
-		$str .= "\t\$sql= \"".$arg1."\";\n";
+		$str .= "public function update(\$data)\n{\r";
+		$str .= "\t\$sql= \"".$arg1." \" .\$this->where.\"\";\n";
 		$str .= "\t\$q = \$this->conn->prepare(\$sql);\n";
 		$str .= "\t\$q->execute();\n";
 		$str .= "\treturn 1;";
-		$str .= "\n}\n\r";
+		$str .= "\n}\n\n\r";
 		return $str;
 	}
-
 	/**
 	* Create the DELETE method declaration
 	* @param $arg string
@@ -107,12 +106,12 @@ class CreateClass
 	public function createDeleteMethodDeclaration($arg1) 
 	{
 		$str = "";
-		$str .= "public function delete(\$data) \r {\r";
+		$str .= "public function delete(\$data)\n{\r";
 		$str .= "\t\$sql= \"".$arg1."\";\n";
 		$str .= "\t\$q = \$this->conn->prepare(\$sql);\n";
 		$str .= "\t\$q->execute();\n";
 		$str .= "\treturn \$r;";
-		$str .= "\n}\n\r";
+		$str .= "\n}\n\n\r";
 		return $str;
 	}
 

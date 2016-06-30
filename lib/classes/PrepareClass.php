@@ -127,7 +127,7 @@ class PrepareClass extends CreateClass
 				if($key === $array_keys[$i]) {
 					for ($j=0; $j < count($value); $j++) { 
 						$str .= $value[$j].',';
-						$array[$key] = 'SELECT '.rtrim($str, ","). ' FROM '.$key.'';
+						$array[$key] = "SELECT ".rtrim($str, ','). " FROM ".$key."";
 					}
 					$str ="";
 				}
@@ -150,7 +150,7 @@ class PrepareClass extends CreateClass
 				if($key === $array_keys[$i]) {
 					for ($j=0; $j < count($value); $j++) { 
 						$str .= $value[$j].',';
-						$array[$key] = 'DELETE FROM '.$key.' WHERE ';
+						$array[$key] = "DELETE FROM ".$key." WHERE ";
 					}
 					$str ="";
 				}
@@ -173,7 +173,7 @@ class PrepareClass extends CreateClass
 				if($key === $array_keys[$i]) {
 					for ($j=0; $j < count($value); $j++) { 
 						$str .= $value[$j].'=?, ';
-						$array[$key] = 'UPDATE '.$key.' SET '.rtrim($str, ",").'WHERE';
+						$array[$key] = 'UPDATE '.$key.' SET '.rtrim($str, ", ").' WHERE';
 					}
 					$str ="";
 					$question_mark = "";
