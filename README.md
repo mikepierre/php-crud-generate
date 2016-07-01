@@ -5,6 +5,18 @@ php crud generate assist with creating CRUD classes of all your database tables 
 The easiest way to install is putting it in your vendor directory or whereever you house your packages.
 Once you have housed this package, you can just init it by just typying in 
 ```php
+//connect to database and generate all files, and its classes.
+$config = array(
+	'database'=>array(
+		'host'=>'localhost',
+		'user'=>'root',
+		'pass'=>'',
+		'db'=>'medical'
+	),
+	'class_settings'=>array(
+		'namespace_name'=>'medical\model' // also creates directory at root of project.
+	));
+
 new lib\PhpCrudGenerate($config);
 ```
 # Code Examples
@@ -67,3 +79,4 @@ $array_create = array('2','mY nAME','2015-09-06','3:00',0);
 $appointment->create($array_create);
 ```
 #Motivation
+If you have a preexisting application, and having trouble porting over an orm because of the complexity of the application code base this class may assist on geting simple query statments done for you.

@@ -7,7 +7,7 @@ error_reporting(E_ALL);
 // Load all classes using spl_autoload
 require_once('autoload.php');
 
-//connect to database and generate all files in xml, and its classes.
+//connect to database and generate all files, and its classes.
 $config = array(
 	'database'=>array(
 		'host'=>'localhost',
